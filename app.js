@@ -7,8 +7,8 @@ const { DataSource } = require('typeorm');
 const port = 3001;
 
 // middleware:
-app.use(cors());
-app.use(express.json());
+app.use(cors()); // (cors policy 완화제)
+app.use(express.json()); // json 형식으로 데이터를 주고 받을 수 있게 허용 해주는 미들웨어 
 
 // connection with mysql
 const dataSource = new DataSource({
