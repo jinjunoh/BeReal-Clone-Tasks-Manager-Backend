@@ -1,39 +1,41 @@
 require('dotenv').config();
-const express = require('express');
-const app = express();
-const cors = require('cors');
-const { DataSource } = require('typeorm');
 
-const port = 3001;
+const express = require('express');
+const cors = require('cors');
+const routes = require('./api/routes');
+
+const { dataSource } = require('./api/models/dataSource');
+const { globalErrorHandler } = require('./api/middlewares/error.js');
+
+const app = express();
+const port = process.env.PORT;
 
 // middleware:
 app.use(cors()); // (cors policy 완화제)
 app.use(express.json()); // json 형식으로 데이터를 주고 받을 수 있게 허용 해주는 미들웨어 
 
-// connection with mysql
-const dataSource = new DataSource({
-  type: process.env.DB_TYPE,
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-});
+//initialize database
+const start = async () => {
+  try {
+    dataSource
+      .initialize()
+      .then(() => {
+        console.log('Data Source has been initialized!');
+      })
+      .catch((err) => {
+        console.log('Error occurred during Data Source initialization', err);
+        dataSource.destroy();
+      });
+    // listen to express server on port 3000
+    app.listen(PORT, () => console.log(`Server is listening on ${PORT}`));
+  } catch (err) {
+    console.error(err);
+  }
+};
 
-dataSource
-  .initialize()
-  .then(() => {
-    console.log('Data Source has been initialized!');
-  })
-  .catch((err) => {
-    console.log('Error occurred during Data Source initialization', err);
-    dataSource.destroy();
-  });
+start();
 
-// listen to express server on port 3000
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+////////////////////////////////////////////////////////////////////////////////
 
 // get request to the database server
 app.get('/', (req, res) => {

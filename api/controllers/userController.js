@@ -3,24 +3,17 @@ const { catchAsync } = require('../middlewares/error');
 
 const signUp = catchAsync(async (req, res) => {
   const {
-    email,
-    password,
-    name,
-    phoneNumber,
-    address,
-    gender,
-    birthDate,
-    points = parseFloat(process.env.POINTS) || 500000.0,
+    firstname,
+    lastname,
+    username,
+    password
   } = req.body;
 
   if (
-    !email ||
-    !password ||
-    !name ||
-    !phoneNumber ||
-    !address ||
-    !gender ||
-    !birthDate
+    !firstname ||
+    !lastname ||
+    !username ||
+    !password 
   ) {
     const err = new Error('KEY_ERROR');
     err.statusCode = 400;
@@ -28,17 +21,17 @@ const signUp = catchAsync(async (req, res) => {
   }
 
   await userService.signUp(
-    email,
-    password,
-    name,
-    phoneNumber,
-    address,
-    gender,
-    birthDate,
-    points
+    firstname,
+    lastname,
+    username,
+    password
   );
 
   return res.status(201).json({
     message: 'SIGNUP_SUCCESS',
   });
 });
+
+module.exports = {
+  signUp,
+};
