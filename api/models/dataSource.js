@@ -1,6 +1,6 @@
-const { DataSource } = require('typeorm');
+// connection with MySQL DataBase
 
-// connection with mysql
+const { DataSource } = require('typeorm');
 const dataSource = new DataSource({
   type: process.env.DB_TYPE,
   host: process.env.DB_HOST,

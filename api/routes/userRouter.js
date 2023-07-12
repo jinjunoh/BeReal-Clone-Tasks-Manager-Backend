@@ -1,3 +1,4 @@
+// configures endpoints to send to controllers 
 const express = require('express');
 const userController = require('../controllers/userController');
 

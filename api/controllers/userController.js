@@ -1,3 +1,5 @@
+// inputs/outputs of the information recived through RESTful API
+
 const userService = require('../services/userService');
 const { catchAsync } = require('../middlewares/error');
 
