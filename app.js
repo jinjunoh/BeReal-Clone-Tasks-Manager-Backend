@@ -4,7 +4,7 @@ const app = express();
 const cors = require('cors');
 const { DataSource } = require('typeorm');
 
-const port = 3000;
+const port = 3001;
 
 // middleware:
 app.use(cors());
@@ -35,7 +35,7 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
-// get request to the databse server
+// get request to the database server
 app.get('/', (req, res) => {
   res.send('Hello, Express!');
 });
@@ -45,7 +45,7 @@ app.get('/users', async (req, res) => {
   const users = await dataSource.query(
     `
         SELECT * FROM users
-        `
+    `
   );
   res.send(users);
 });
@@ -71,6 +71,9 @@ app.post('/users', async (req, res) => {
     throw error;
   }
 });
+
+
+
 app.delete('/users/:id', async (req, res) => {
   const { id } = req.params;
   try {
