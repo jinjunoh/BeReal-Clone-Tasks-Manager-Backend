@@ -8,11 +8,12 @@ const { dataSource } = require('./api/models/dataSource');
 const { globalErrorHandler } = require('./api/middlewares/error.js');
 
 const app = express();
-const port = process.env.PORT;
+const PORT = process.env.PORT;
 
 // middleware:
 app.use(cors()); // (cors policy 완화제)
-app.use(express.json()); // json 형식으로 데이터를 주고 받을 수 있게 허용 해주는 미들웨어 
+app.use(express.json()); // json 형식으로 데이터를 주고 받을 수 있게 허용 해주는 미들웨어
+app.use(routes);
 
 //initialize database
 const start = async () => {
@@ -73,8 +74,6 @@ app.post('/users', async (req, res) => {
     throw error;
   }
 });
-
-
 
 app.delete('/users/:id', async (req, res) => {
   const { id } = req.params;

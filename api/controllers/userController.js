@@ -5,17 +5,19 @@ const { catchAsync } = require('../middlewares/error');
 
 const signUp = catchAsync(async (req, res) => {
   const {
+    email,
+    password,
     firstname,
     lastname,
-    username,
-    password
+    phone_number
   } = req.body;
-
+  console.log(email, password, firstname, lastname, phone_number);
   if (
+    !email ||
+    !password ||
     !firstname ||
     !lastname ||
-    !username ||
-    !password 
+    !phone_number
   ) {
     const err = new Error('KEY_ERROR');
     err.statusCode = 400;
@@ -23,10 +25,11 @@ const signUp = catchAsync(async (req, res) => {
   }
 
   await userService.signUp(
+    email,
+    password,
     firstname,
     lastname,
-    username,
-    password
+    phone_number
   );
 
   return res.status(201).json({
