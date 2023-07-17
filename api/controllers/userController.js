@@ -37,6 +37,21 @@ const signUp = catchAsync(async (req, res) => {
   });
 });
 
+const login = catchAsync(async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    const error = new Error('KEY_ERROR');
+    error.statusCode = 400;
+    throw error;
+  }
+
+  const accessToken = await userService.login(email, password);
+  //console.log(accessToken);
+  return res.status(200).json({ accessToken });
+});
+
 module.exports = {
   signUp,
+  login,
 };
