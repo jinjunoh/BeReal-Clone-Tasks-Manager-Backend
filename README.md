@@ -23,7 +23,8 @@
 </div>
 
 <h2>ERD diagram</h2>
-<img src="https://github.com/jinjunoh/BeReal-Clone-Tasks-Manager-Backend/assets/db_diagram.png">
+<img src="">
+assets/db_diagram.png
 
 ### `Auth`
 - Implemented robust email and password validation checks to ensure the integrity and security of user credentials.<br/>

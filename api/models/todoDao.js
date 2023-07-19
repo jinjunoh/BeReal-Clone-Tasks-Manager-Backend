@@ -2,15 +2,16 @@
 const { dataSource } = require('./dataSource');
 
 const create = async (user_id, title, body, due_date, status) => {
-  try {
+    try {
+      console.log(user_id, title, body, due_date, status);
     return await dataSource.query(
       `
-        INSERT INTO users (
+        INSERT INTO todo (
             user_id,
             title,
             body,
             due_date,
-            status,
+            status
         ) VALUES (
           ?, ?, ?, ?, ?
         )
