@@ -6,7 +6,12 @@ const create = async (user_id, title, body, due_date, status) => {
   const createTodo = await todoDao.create(user_id, title, body, due_date, status);
   return createTodo;
 };
+const tasks = async (user_id) => {
+  const tasksTodo = await todoDao.tasks(user_id);
+  return tasksTodo;
+}
 
 module.exports = {
-    create,
+  create,
+  tasks,
 };

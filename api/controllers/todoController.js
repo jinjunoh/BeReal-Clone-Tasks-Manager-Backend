@@ -24,7 +24,20 @@ const create = catchAsync(async (req, res) => {
     message: 'CREATE_SUCCESS',
   });
 });
+const tasks = catchAsync(async (req, res) => {
+  const user_id = req.user.id;
+  if (!user_id) {
+    const err = new Error('KEY_ERROR');
+    err.statausCode = 400;
+    throw err;
+  }
+  const tasks = await todoService.tasks(user_id);
+  return res.status(201).json({
+    tasks
+  });
+});
 
 module.exports = {
   create,
+  tasks,
 };

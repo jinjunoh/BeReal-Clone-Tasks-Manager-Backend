@@ -25,6 +25,29 @@ const create = async (user_id, title, body, due_date, status) => {
     throw error;
   }
 };
+const tasks = async (user_id) => {
+  try {
+    return await dataSource.query(
+      `
+        SELECT
+        id, 
+        title,
+        body,
+        due_date,
+        status
+      FROM todo
+      WHERE user_id = ? 
+        `,
+      [user_id]
+    );
+  } catch (error) {
+    console.log(error);
+    error = new Error('DATABASE_CONNECTION_ERROR');
+    error.statusCode = 400;
+    throw error;
+  }
+};
 module.exports = {
-  create,
+    create,
+    tasks,
 };
