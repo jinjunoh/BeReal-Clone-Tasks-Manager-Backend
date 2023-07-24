@@ -47,7 +47,31 @@ const tasks = async (user_id) => {
     throw error;
   }
 };
+const edit = async (id, user_id, title, body, due_date, status) => {
+  try {
+    return await dataSource.query(
+      `
+        UPDATE todo 
+            SET title = ?
+            SET body = ?
+            SET due_date = ?
+            SET status = ?
+            WHERE id = ? AND user_id = ?
+        ) VALUES (
+          ?, ?, ?, ?, ?, ?
+        )
+      `,
+      [title, body, due_date, status, id, user_id]
+    );
+  } catch (error) {
+    console.log(error);
+    error = new Error('DATABASE_CONNECTION_ERROR');
+    error.statusCode = 400;
+    throw error;
+  }
+};
 module.exports = {
     create,
-    tasks,
+  tasks,
+    edit,
 };

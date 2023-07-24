@@ -10,8 +10,20 @@ const tasks = async (user_id) => {
   const tasksTodo = await todoDao.tasks(user_id);
   return tasksTodo;
 }
+const edit = async (id, user_id, title, body, due_date, status) => {
+  const editTodo = await todoDao.edit(
+    id,
+    user_id,
+    title,
+    body,
+    due_date,
+    status
+  );
+  return editTodo;
+}
 
 module.exports = {
   create,
   tasks,
+  edit,
 };

@@ -36,8 +36,34 @@ const tasks = catchAsync(async (req, res) => {
     tasks
   });
 });
-
+const edit = catchAsync(async (req, res) => {
+  const {
+    id,
+    user_id,
+    title,
+    body,
+    due_date,
+    status
+  } = req.body;
+   if (!id || !user_id || title || body || due_date || status) {
+     const err = new Error('KEY_ERROR');
+     err.statausCode = 400;
+     throw err;
+   }
+   const edit = await todoService.edit(
+     id,
+     user_id,
+     title,
+     body,
+     due_date,
+     status
+   );
+   return res.status(201).json({
+     edit,
+   });
+})
 module.exports = {
   create,
   tasks,
+  edit,
 };

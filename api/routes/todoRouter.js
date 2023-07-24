@@ -8,7 +8,7 @@ const { validateToken } = require('../middlewares/auth');
 
 router.post('/create', validateToken, todoController.create);
 router.get('/tasks', validateToken, todoController.tasks);
-//router.get('/delete', todoController.login);
+router.patch('/edit', todoController.edit);
 
 module.exports = {
   router,
