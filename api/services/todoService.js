@@ -1,4 +1,4 @@
-// handles the logic of user functions
+// handles the logic of todo functions
 
 const todoDao = require('../models/todoDao');
 
