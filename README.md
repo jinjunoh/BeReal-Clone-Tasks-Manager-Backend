@@ -38,7 +38,7 @@ Implemented advanced ordering and pagination capabilities using optimized SQL qu
 - Pagination: Implemented efficient pagination techniques to handle large datasets, ensuring smooth and fast browsing experience for users. 
 
 ### `Details`
-- Utilized AWS S3 to store images and enable media sharing capabilities
+- Allowed useres to directly post and get from AWS S3 minimizing data flow and optimizing data queries from client side by configuring a secure URL from the backend
 - Deployed the Backend server on AWS EC2 instance inside an auto-scaling group linked with an Elastic Load Balancer to enable a scaling cloud infrastructure design
 
 ### `Mypage`
