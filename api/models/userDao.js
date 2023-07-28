@@ -1,6 +1,52 @@
 // Manipulation of the database for user functions
 const { dataSource } = require('./dataSource');
+const deleteUser = async (user_id) => {
+  const queryRunner = dataSource.createQueryRunner();
 
+  await queryRunner.connect();
+  await queryRunner.startTransaction();
+  try {
+    await queryRunner.query(
+      `
+        DELETE FROM friend 
+        WHERE 
+          user_id = ? 
+          OR 
+          friend_user_id = ?
+      `,
+      [user_id, user_id]
+    );
+    await queryRunner.query(
+      `
+        DELETE FROM todo 
+        WHERE 
+          id = ? 
+      `,
+      [user_id]
+    );
+    await queryRunner.query(
+      `
+        DELETE FROM users 
+        WHERE 
+          id = ? 
+      `,
+      [user_id]
+    );
+    await queryRunner.commitTransaction();
+    
+  } catch (error) {
+    console.log(error)
+    await queryRunner.rollbackTransaction();
+
+    error = new Error('DATABASE_CONNECTION_ERROR');
+    error.statusCode = 400;
+    throw error;
+  } finally {
+    if (queryRunner) {
+      await queryRunner.release();
+    }
+  }
+};
 const createUser = async (
   email,
   password,
@@ -74,6 +120,27 @@ const isExistedUser = async (email) => {
   }
 };
 
+const isExistedUserID = async (user_id) => {
+  try {
+    const [result] = await dataSource.query(
+      `
+        SELECT EXISTS (
+          SELECT
+          id
+          FROM users 
+          WHERE id = ?
+      ) idExists
+      `,
+      [user_id]
+    );
+    return !!parseInt(result.idExists);
+  } catch (error) {
+    error = new Error('DATABASE_CONNECTION_ERROR');
+    error.statusCode = 400;
+    throw error;
+  }
+};
+
 const getUserById = async (id) => {
   try {
     const [user] = await dataSource.query(
@@ -99,10 +166,11 @@ const getUserById = async (id) => {
   }
 };
 
-
 module.exports = {
   createUser,
   getUserByEmail,
   getUserById,
-  isExistedUser
+  isExistedUser,
+  isExistedUserID,
+  deleteUser,
 };

@@ -9,7 +9,16 @@ const {
   pwValidationCheck,
   emailValidationCheck,
 } = require('../utils/validation-check.js');
-
+////////
+const deleteUserById = async (user_id) => {
+  if (!(await isExistedUserID(user_id))) {
+    const error = new Error('USER_DOESNOT_EXIST');
+    error.statusCode = 400;
+    throw error;
+  }
+  const deleteUser = await userDao.deleteUser(user_id);
+  return deleteUser;
+}
 const signUp = async (email, password, firstname, lastname, phone_number) => {
   pwValidationCheck(password);
   emailValidationCheck(email);
@@ -54,6 +63,9 @@ const login = async (email, password) => {
 const isExistedUser = async (email) => {
   return userDao.isExistedUser(email);
 };
+const isExistedUserID = async (user_id) => {
+  return userDao.isExistedUserID(user_id);
+};
 
 const getUserById = async (id) => {
   return userDao.getUserById(id);
@@ -65,4 +77,5 @@ module.exports = {
   login,
   isExistedUser,
   getUserById,
+  deleteUserById,
 };
