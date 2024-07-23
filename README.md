@@ -23,19 +23,12 @@
 </div>
 
 <h2>ERD diagram</h2>
-<img src="">
-assets/db_diagram.png
+<img src="assets/db_diagram.png">
 
 ### `Auth`
 - Implemented robust email and password validation checks to ensure the integrity and security of user credentials.<br/>
 - Sign Up: Utilized the industry-standard bcrypt hashing algorithm to encrypt and securely store user passwords, enhancing data protection<br/>
 - Login: Implemented token-based authentication using the widely adopted jsonwebtoken library, ensuring secure and reliable user authentication.<br/>
-
-### `Main`
-Implemented advanced ordering and pagination capabilities using optimized SQL queries.
-
-- Ordering: Enabled users to sort task listings based on different attributes such as imminency and status. This empowers users to easily find the products that best meet their preferences and requirements.
-- Pagination: Implemented efficient pagination techniques to handle large datasets, ensuring smooth and fast browsing experience for users. 
 
 ### `Details`
 - Allowed useres to directly post and get from AWS S3 minimizing data flow and optimizing data queries from client side by configuring a secure URL from the backend
